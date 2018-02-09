@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Redirect, Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -21,4 +21,4 @@ PrivateRoute.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
 
-export default withRouter(PrivateRoute);
+export default PrivateRoute;

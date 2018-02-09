@@ -8,14 +8,13 @@ class Navigation extends React.Component {
         <Link to="/" className="navbar-brand">Votex</Link>
 
         <ul className="navbar-nav ml-auto">
-          <li><a className="nav-link disabled">Welcome</a></li>
           <li className="nav-item">
             <Link to="/signup" className="nav-link">Sign up</Link>
           </li>
-          <li>
+          <li className="nav-item">
             <Link to="/login" className="nav-link">Login</Link>
           </li>
-          <li>
+          <li className="nav-item">
             <Link to="/signuptwitter" className="nav-link">Sign up with Twitter</Link>
           </li>
         </ul>

@@ -16,16 +16,16 @@ import './bootstrap.min.css';
 class App extends Component {
 
   render() {
-    const {isAuthenticated} = this.props;
+    const {isAuthenticated, username } = this.props;
 
     return (
       <div>
-        {isAuthenticated ? <NavigationUser /> : <Navigation />}
+        {isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
         <Switch>
          <Route exact path="/" component={ListPage} />
          <Route path="/signup" component={SignupPage} />
          <Route path="/login" component={LoginPage} />
-         <PrivateRoute path="/private" component={WelcomePage} isAuthenticated={isAuthenticated}/>
+         <PrivateRoute path="/private" component={WelcomePage} isAuthenticated={isAuthenticated} username={username}/>
        </Switch>
       </div>
     );
@@ -33,12 +33,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  username: PropTypes.string
 }
 
 function mapStateToProps(state){
   return {
-    isAuthenticated: state.Auth.isAuthenticated
+    isAuthenticated: state.Auth.isAuthenticated,
+    username: state.Auth.user
   }
 }
 

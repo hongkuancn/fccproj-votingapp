@@ -4,6 +4,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 import './index.css';
 import App from './App';
@@ -17,7 +19,9 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk)
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
 )
 
 ReactDOM.render(

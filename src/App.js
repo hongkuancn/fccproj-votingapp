@@ -7,7 +7,6 @@ import './bootstrap.min.css';
 
 class App extends Component {
   render() {
-    console.log(this.props.children);
     return (
       <div>
         {true ? <Navigation /> : <NavigationUser />}

@@ -6,7 +6,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     console.log(rest);
     console.log(props);
     return (
-    true ? (
+    false ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import validateInput from './validators/signup';
-import bcrypt from 'bcryptjs';
 import { connect } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
 
 import { signupUser } from './actions/public';
 
@@ -23,8 +23,11 @@ class SignupPage extends React.Component {
     const { errors, isValid } = validateInput(this.state);
     if(isValid){
       const { username, password } = this.state;
-      const password_digest = bcrypt.hashSync(password, 10);
-      this.props.signupUser({ username, password_digest})
+      this.props.signupUser({ username, password })
+        .then(() => { this.props.history.push('/login')})
+        .catch(err => this.setState({ errors: err.response.data }))
+    } else {
+      this.setState({ errors });
     }
   }
 

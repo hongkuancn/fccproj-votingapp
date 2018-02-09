@@ -24,5 +24,5 @@
     "eject": "react-scripts eject",
     "dev": "concurrently \"cd backend && npm start\" \"cd ./ && npm start \""
   },
-  "proxy": "https://localhost:8080"
+  "proxy": "http://localhost:8080"
 }

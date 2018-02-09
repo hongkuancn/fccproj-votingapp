@@ -21,7 +21,7 @@ class LoginPage extends React.Component {
     if(isValid){
       this.setState({ errors: {} });
       this.props.loginUser(this.state)
-        .then(res => this.props.history.push('/signup'))
+        .then(res => this.props.history.push('/private'))
         .catch(err => {
           if (err.response){
             this.setState({ errors: err.response.data.login });

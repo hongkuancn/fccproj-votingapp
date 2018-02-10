@@ -9,7 +9,7 @@ class NavigationUser extends React.Component {
         <Link to="/private" className="navbar-brand">Votex</Link>
 
         <ul className="navbar-nav ml-auto">
-          <li><a className="nav-link disabled">Welcome,{username}</a>
+          <li><a className="nav-link disabled">Welcome {username}</a>
           </li>
           <li>
             <Link to="/private/:userid/mypolls" className="nav-link">My Polls</Link>

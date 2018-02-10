@@ -1,10 +1,12 @@
 import axios from 'axios';
+import setAuthentication from '../utils/setAuthentication';
+import jwtDecode from 'jwt-decode';
 
-export const APPROVE_AUTHTICATION = 'APPROVE_AUTHTICATION';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 function authenticated(data){
   return {
-    type: APPROVE_AUTHTICATION,
+    type: SET_CURRENT_USER,
     data
   }
 }
@@ -22,6 +24,12 @@ export function signupUser(userData){
   }
 }
 
+export function fetchList(){
+  return dispatch => {
+    return axios.get('/api/list');
+  }
+}
+
 export function loginUser(userData){
   return dispatch => {
     return axios.post('/api/login', userData)
@@ -30,7 +38,10 @@ export function loginUser(userData){
         return res;
       })
       .then(res => {
-        dispatch(authenticated(res.data));
+        const token = res.data.token;
+        localStorage.setItem('votex-token', token);
+        setAuthentication(token);
+        dispatch(authenticated(jwtDecode(token)));
         return res;
       })
   }

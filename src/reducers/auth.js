@@ -1,4 +1,4 @@
-import {APPROVE_AUTHTICATION} from '../actions/public';
+import { SET_CURRENT_USER } from '../actions/public';
 
 const initialState = {
   isAuthenticated: false,
@@ -7,7 +7,7 @@ const initialState = {
 
 export default function(state=initialState, action={}){
   switch (action.type) {
-    case APPROVE_AUTHTICATION:
+    case SET_CURRENT_USER:
       return {
         isAuthenticated: true,
         user: action.data.username

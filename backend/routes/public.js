@@ -5,6 +5,8 @@ import commonValidation from '../validators/signup';
 import loginValidation from '../validators/login';
 import User from '../models/user';
 import isEmpty from 'lodash/isEmpty';
+import map from 'lodash/map';
+import jwt from 'jsonwebtoken';
 
 const Router = express.Router();
 
@@ -24,6 +26,17 @@ function validateSignupInput(data, otherValidation){
     }
   })
 }
+
+Router.get('/list', (req, res) => {
+  User.find({}, (err, users) => {
+    const list = map(users,(user) => user.polls)
+    if(list){
+      res.json(list)
+    } else {
+      res.json(null)
+    }
+  }
+)})
 
 Router.post('/signup', (req, res, next) => {
   const { username, password } = req.body;
@@ -46,7 +59,11 @@ Router.post('/login', (req, res, next) => {
     User.findOne({ username: username }).then(user => {
       if(user){
         if(bcrypt.compareSync(password, user["password_digest"])){
-          res.json(user)
+          const token = jwt.sign({
+            username: user.username,
+            id: user._id.toString()
+          }, 'keyforjwt')
+          res.json({token, user})
         } else {
           errors.login = "Invalid username/password pair";
           res.status(401).json(errors)

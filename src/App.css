@@ -1,3 +1,11 @@
 nav.navbar-dark .navbar-nav .nav-link.disabled {
   color: #fff;
 }
+
+.alert {
+  margin-top: 5px
+}
+
+.lb-lg {
+  font-size: 20px
+}

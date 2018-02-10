@@ -19,11 +19,11 @@ class NewpollPage extends React.Component {
     return (
       <form onSubmit={this.handleSubmit} className="container-fluid">
         <div className="form-group">
-          <label>New Poll</label>
+          <label className="lb-lg">New Poll</label>
           <input type="text" className="form-control" name="topic" value={this.state.topic} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
-          <label>Options</label>
+          <label className="lb-lg">Options</label>
           <textarea value={this.state.options} className="form-control" name="options" onChange={this.handleChange} />
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>

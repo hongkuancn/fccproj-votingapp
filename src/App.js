@@ -10,17 +10,20 @@ import SignupPage from './SignupPage';
 import LoginPage from './LoginPage';
 import PrivateRoute from './PrivateRoute';
 import WelcomePage from './user/WelcomePage';
+import FlashMessage from './FlashMessage';
+import { closeMessage } from './actions/public';
 import './App.css';
 import './bootstrap.min.css';
 
 class App extends Component {
 
   render() {
-    const {isAuthenticated, username } = this.props;
+    const {isAuthenticated, username, message } = this.props;
 
     return (
       <div>
         {isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
+        { message && <FlashMessage message={message} closeMessage={this.props.closeMessage}/> }
         <Switch>
          <Route exact path="/" component={ListPage} />
          <Route path="/signup" component={SignupPage} />
@@ -34,14 +37,17 @@ class App extends Component {
 
 App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  username: PropTypes.string
+  username: PropTypes.string,
+  message: PropTypes.string.isRequired,
+  closeMessage: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state){
   return {
     isAuthenticated: state.Auth.isAuthenticated,
-    username: state.Auth.user
+    username: state.Auth.user,
+    message: state.FlashMessage.message
   }
 }
 
-export default withRouter(connect(mapStateToProps, {})(App));
+export default withRouter(connect(mapStateToProps, { closeMessage })(App));

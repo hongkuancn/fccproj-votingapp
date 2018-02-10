@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
   }
 
   handleChange = (e) => {
+    // clear errors when you type in the form
     this.setState({ errors: {}})
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -25,6 +26,7 @@ class LoginPage extends React.Component {
     if(isValid){
       this.setState({ errors: {} });
       this.props.loginUser(this.state)
+      // redirect to authenticated user's page
         .then(res => this.props.history.push('/private'))
         .catch(err => {
           if (err.response){
@@ -41,14 +43,22 @@ class LoginPage extends React.Component {
     return (
       <form className="container-fluid" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label>Username</label>
+          <label className="lb-lg">Username</label>
           <input type="text" className={classnames('form-control', {'is-invalid': errors.username||errors.login})} name="username" value={this.state.username} onChange={this.handleChange}/>
-          { errors.username && <div className="invalid-feedback">{errors.username}</div> }
+
+          {errors.username  && (
+            <div className="alert alert-danger" role="alert">
+              {errors.username}
+            </div>)}
         </div>
         <div className="form-group">
-          <label>Password</label>
-          <input type="password" className={classnames('form-control', {'is-invalid': errors.password||errors.login})} name="password" value={this.state.password} onChange={this.handleChange}/>
-          { (errors.password || errors.login) && <div className="invalid-feedback">{errors.password||errors.login}</div> }
+          <label className="lb-lg">Password</label>
+          <input type="password" className={classnames('form-control', {'is-invalid': errors.password||errors.login})} name="password" value={this.state.password} onChange={this.handleChange} />
+
+          {(errors.password || errors.login) && (
+            <div className="alert alert-danger" role="alert">
+              {errors.password||errors.login}
+            </div>)}
         </div>
 
         <button type="submit" className="btn btn-primary">Login</button>

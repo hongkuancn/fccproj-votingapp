@@ -10,6 +10,7 @@ import jwt from 'jsonwebtoken';
 
 const Router = express.Router();
 
+//check if there is user with the same username
 function validateSignupInput(data, otherValidation){
   let { errors } = otherValidation(data);
   const { username } = data;
@@ -27,6 +28,7 @@ function validateSignupInput(data, otherValidation){
   })
 }
 
+//fetch existed polls
 Router.get('/list', (req, res) => {
   User.find({}, (err, users) => {
     const list = map(users,(user) => user.polls)
@@ -38,20 +40,22 @@ Router.get('/list', (req, res) => {
   }
 )})
 
+//sign up route
 Router.post('/signup', (req, res, next) => {
   const { username, password } = req.body;
   validateSignupInput(req.body, commonValidation).then(({ errors, isValid }) => {
     if(isValid){
       const password_digest = bcrypt.hashSync(password, 10);
       User.create({ username, password_digest }).then(user => {
-        res.json(user)
+        res.json({user, message: 'Signed up successfully!'})
       })
     } else {
-      res.status(400).json(errors)
+      res.status(401).json(errors)
     }
   })
 })
 
+//login route
 Router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   const { errors, isValid } = loginValidation(req.body);
@@ -63,7 +67,7 @@ Router.post('/login', (req, res, next) => {
             username: user.username,
             id: user._id.toString()
           }, 'keyforjwt')
-          res.json({token, user})
+          res.json({token, user, message: 'Logged in successfully!'})
         } else {
           errors.login = "Invalid username/password pair";
           res.status(401).json(errors)
@@ -77,7 +81,5 @@ Router.post('/login', (req, res, next) => {
     res.status(400).json(errors)
   }
 })
-
-
 
 export default Router;

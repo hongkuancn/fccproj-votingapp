@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 
 const OptionSchema = new Schema({
   name: String,
-  times: Number
+  times: {
+    type: Number,
+    default: 0
+  }
 })
 
 const PollSchema = new Schema({

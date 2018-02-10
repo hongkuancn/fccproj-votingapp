@@ -22,13 +22,18 @@ class SignupPage extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirmation } = this.state;
-    const { errors, isValid } = validateInput({ username, password, passwordConfirmation });
+    let { errors, isValid } = validateInput({ username, password, passwordConfirmation });
     this.setState({ errors });
     if(isValid){
       const { username, password } = this.state;
       this.props.signupUser({ username, password })
-        .then(() =>  this.props.history.push('/login'))
-        .catch(err => this.setState({ errors: err.response.data }))
+      // redirect to login page after signup
+        .then(res =>  this.props.history.push('/login'))
+        .catch(err => {
+          if (err.response){
+            this.setState({ errors: err.response.data });
+          }
+        })
     } else {
       this.setState({ errors });
     }
@@ -36,22 +41,35 @@ class SignupPage extends React.Component {
 
   render(){
     const { errors } = this.state;
+    console.log(errors);
     return (
       <form className="container-fluid" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label>Username</label>
+          <label className="lb-lg">Username</label>
           <input type="text" className={classnames('form-control', {'is-invalid': errors.username})} name="username" value={this.state.username} onChange={this.handleChange}/>
-          { errors.username && <div className="invalid-feedback">{errors.username}</div> }
+
+          {errors.username  && (
+            <div className="alert alert-danger" role="alert">
+              {errors.username}
+            </div>)}
         </div>
         <div className="form-group">
-          <label>Password</label>
+          <label className="lb-lg">Password</label>
           <input type="password" className={classnames('form-control', {'is-invalid': errors.password})} name="password" value={this.state.password} onChange={this.handleChange}/>
-          { errors.password && <div className="invalid-feedback">{errors.password}</div> }
+
+          {errors.password  && (
+            <div className="alert alert-danger" role="alert">
+              {errors.password}
+            </div>)}
         </div>
         <div className="form-group">
-          <label>Password Confirmation</label>
+          <label className="lb-lg">Password Confirmation</label>
           <input type="password" className={classnames('form-control', {'is-invalid': errors.passwordConfirmation})} name="passwordConfirmation" value={this.state.passwordConfirmation} onChange={this.handleChange}/>
-          { errors.passwordConfirmation && <div className="invalid-feedback">{errors.passwordConfirmation}</div> }
+
+          {errors.passwordConfirmation  && (
+            <div className="alert alert-danger" role="alert">
+              {errors.passwordConfirmation}
+            </div>)}
         </div>
         <button type="submit" className="btn btn-primary">Sign Up</button>
       </form>

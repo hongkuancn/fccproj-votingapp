@@ -6,7 +6,8 @@ export default function(input){
   const { username, password } = input;
   if(validator.isEmpty(username)){
     errors.username = 'Username cannot be empty!'
-  } else if (validator.isEmpty(password)){
+  }
+  if (validator.isEmpty(password)){
     errors.password = 'Password cannot be empty!'
   }
   return {

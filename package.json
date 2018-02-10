@@ -6,6 +6,7 @@
     "axios": "0.17.1",
     "bcryptjs": "2.4.3",
     "body-parser": "^1.18.2",
+    "classnames": "^2.2.5",
     "concurrently": "3.5.1",
     "jsonwebtoken": "^8.1.1",
     "jwt-decode": "^2.2.0",

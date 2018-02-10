@@ -14,7 +14,7 @@ export default function(input){
     errors.passwordConfirmation = 'Password Confirmation cannot be empty!'
   }
   if (!validator.equals(password, passwordConfirmation)){
-    errors.password = "The password doesn't match!"
+    errors.passwordConfirmation = "The password doesn't match!"
   };
   return {
     errors,

@@ -39,7 +39,6 @@ class LoginPage extends React.Component {
 
   render(){
     const { errors } = this.state;
-    console.log(errors);
     return (
       <form className="container-fluid" onSubmit={this.handleSubmit}>
         <div className="form-group">

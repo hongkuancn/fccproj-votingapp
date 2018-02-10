@@ -4,7 +4,7 @@ import validateInput from './validators/signup';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import { signupUser } from './actions/public';
+import { signupUser, isUserExist } from './actions/public';
 
 class SignupPage extends React.Component {
   state = {
@@ -39,6 +39,16 @@ class SignupPage extends React.Component {
     }
   }
 
+  handleBlur = (e) => {
+    const username = e.target.value;
+    this.props.isUserExist(username)
+    .catch(err => {
+      if (err.response){
+        this.setState({ errors: err.response.data });
+      }
+    })
+  }
+
   render(){
     const { errors } = this.state;
     console.log(errors);
@@ -46,7 +56,7 @@ class SignupPage extends React.Component {
       <form className="container-fluid" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label className="lb-lg">Username</label>
-          <input type="text" className={classnames('form-control', {'is-invalid': errors.username})} name="username" value={this.state.username} onChange={this.handleChange}/>
+          <input type="text" className={classnames('form-control', {'is-invalid': errors.username})} name="username" value={this.state.username} onChange={this.handleChange} onBlur={this.handleBlur}/>
 
           {errors.username  && (
             <div className="alert alert-danger" role="alert">
@@ -78,7 +88,8 @@ class SignupPage extends React.Component {
 };
 
 SignupPage.propTypes = {
-  signupUser: PropTypes.func.isRequired
+  signupUser: PropTypes.func.isRequired,
+  isUserExist: PropTypes.func.isRequired
 }
 
-export default connect(null, { signupUser })(SignupPage);
+export default connect(null, { signupUser, isUserExist })(SignupPage);

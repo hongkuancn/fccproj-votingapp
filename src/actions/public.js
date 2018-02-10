@@ -70,3 +70,9 @@ export function closeMessage(){
     dispatch(deleteMessage())
   }
 }
+
+export function isUserExist(name){
+  return dispatch => {
+    return axios.get(`/api/signup/${name}`)
+  }
+}

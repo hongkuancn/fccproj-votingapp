@@ -82,4 +82,18 @@ Router.post('/login', (req, res, next) => {
   }
 })
 
+Router.get('/signup/:name', (req, res) => {
+  let errors = {};
+  User.findOne({username: req.params.name}).then(user => {
+    if(user){
+      if (user.username === req.params.name){
+        errors.username = "There is user with this username!";
+      }
+      res.status(400).json(errors)
+    } else {
+      res.send({})  
+    }
+  })
+})
+
 export default Router;

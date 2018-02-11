@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import publicRouter from './routes/public';
+import privateRouter from './routes/user';
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,7 +13,8 @@ mongoose.connect(dbURL, () => {
   console.log("connected to mongodb");
 })
 
-app.use('/api', publicRouter);
+app.use('/api/public', publicRouter);
+app.use('/api/private', privateRouter);
 
 app.use((req, res) => {
   res.status(404).json({

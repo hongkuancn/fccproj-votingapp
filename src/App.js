@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navigation from './Navigation';
 import NavigationUser from './user/NavigationUser';
-import { withRouter, Switch, Route, Link } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 
 import ListPage from './ListPage';
 import SignupPage from './SignupPage';
@@ -22,7 +22,7 @@ class App extends Component {
 
     return (
       <div>
-        {isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
+        { isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
         { message && <FlashMessage message={message} closeMessage={this.props.closeMessage}/> }
         <Switch>
          <Route exact path="/" component={ListPage} />

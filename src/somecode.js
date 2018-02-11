@@ -56,3 +56,10 @@ let topics = _.map(array, (user) => {
 		return poll.topic;
 	})
 })
+
+User.findOne({_id: id}, (err, user) => {
+  user.polls.create(req.body).then(({err, x}) => {
+    console.log(x);
+    res.json(x);
+  })
+})

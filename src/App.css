@@ -6,6 +6,20 @@ nav.navbar-dark .navbar-nav .nav-link.disabled {
   margin-top: 5px
 }
 
+#listPage{
+  background: #d3d3d3;
+  margin-top: 10px;
+  border-radius: 20px;
+}
+
 .lb-lg {
   font-size: 20px
+}
+
+ul.list-group {
+  padding: 5% 20% 10% 20%;
+}
+
+li{
+  cursor: pointer;
 }

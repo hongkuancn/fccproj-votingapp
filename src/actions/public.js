@@ -28,7 +28,7 @@ function deleteMessage(){
 
 export function signupUser(userData){
   return dispatch => {
-    return axios.post('/api/signup', userData)
+    return axios.post('/api/public/signup', userData)
       .then(response => {
       	console.log(response);
         return response;
@@ -43,13 +43,13 @@ export function signupUser(userData){
 
 export function fetchList(){
   return dispatch => {
-    return axios.get('/api/list');
+    return axios.get('/api/public/list');
   }
 }
 
 export function loginUser(userData){
   return dispatch => {
-    return axios.post('/api/login', userData)
+    return axios.post('/api/public/login', userData)
       .then(res => {
       	console.log(res);
         return res;
@@ -73,6 +73,6 @@ export function closeMessage(){
 
 export function isUserExist(name){
   return dispatch => {
-    return axios.get(`/api/signup/${name}`)
+    return axios.get(`/api/public/signup/${name}`)
   }
 }

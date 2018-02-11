@@ -32,7 +32,6 @@ class ListPage extends React.Component {
 
   render(){
     const { pollslist, chosenPoll } = this.state;
-    console.log(chosenPoll);
 
     const polls = (
       map(pollslist, poll =>   (

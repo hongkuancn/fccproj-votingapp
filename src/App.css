@@ -34,6 +34,10 @@ ul.list-group {
   padding: 0 15% 10% 15%;
 }
 
-li{
+.list-group li{
   cursor: pointer;
+}
+
+form.container-fluid {
+  padding: 0 25% 10% 25%;
 }

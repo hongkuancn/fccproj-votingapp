@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
   render(){
     const { errors } = this.state;
     return (
-      <form className="container-fluid" onSubmit={this.handleSubmit}>
+      <form className="container-fluid pt-3" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label className="lb-lg">Username</label>
           <input type="text" className={classnames('form-control', {'is-invalid': errors.username||errors.login})} name="username" value={this.state.username} onChange={this.handleChange}/>

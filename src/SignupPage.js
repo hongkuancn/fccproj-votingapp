@@ -41,18 +41,20 @@ class SignupPage extends React.Component {
 
   handleBlur = (e) => {
     const username = e.target.value;
-    this.props.isUserExist(username)
-    .catch(err => {
-      if (err.response){
-        this.setState({ errors: err.response.data });
-      }
-    })
+    if(username !== ''){
+      this.props.isUserExist(username)
+      .catch(err => {
+        if (err.response){
+          this.setState({ errors: err.response.data });
+        }
+      })
+    }
   }
 
   render(){
     const { errors } = this.state;
     return (
-      <form className="container-fluid" onSubmit={this.handleSubmit}>
+      <form className="container-fluid pt-3" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label className="lb-lg">Username</label>
           <input type="text" className={classnames('form-control', {'is-invalid': errors.username})} name="username" value={this.state.username} onChange={this.handleChange} onBlur={this.handleBlur}/>

@@ -76,3 +76,9 @@ export function isUserExist(name){
     return axios.get(`/api/public/signup/${name}`)
   }
 }
+
+export function fetchPoll(id){
+  return dispatch => {
+    return axios.get(`api/public/polls/${id}`)
+  }
+}

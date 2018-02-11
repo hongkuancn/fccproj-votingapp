@@ -1,3 +1,5 @@
+import map from 'lodash/map'
+
 componentWillReceiveProps(nextProps) {
   // will be true
   const locationChanged1 = nextProps.location !== this.props.location

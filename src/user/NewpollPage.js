@@ -29,6 +29,7 @@ class NewpollPage extends React.Component {
         return { name: item }
       })
       this.props.addNewPoll({ topic, options: convertopt })
+        .then(res => this.history.push('/private'))
         .catch(err => this.setState({ errors: err.response.data }))
     }
   }

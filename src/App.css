@@ -12,12 +12,26 @@ nav.navbar-dark .navbar-nav .nav-link.disabled {
   border-radius: 20px;
 }
 
+.list-header {
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 40px 0 10px 0;
+  text-align: center;
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: center;
+}
+
 .lb-lg {
   font-size: 20px
 }
 
 ul.list-group {
-  padding: 5% 20% 10% 20%;
+  padding: 0 15% 10% 15%;
 }
 
 li{

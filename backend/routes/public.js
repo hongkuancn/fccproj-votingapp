@@ -30,8 +30,18 @@ function validateSignupInput(data, otherValidation){
 
 //fetch existed polls
 Router.get('/list', (req, res) => {
-  User.find({}, (err, users) => {
-    const list = map(users,(user) => user.polls)
+  //first fetch user whose poll is not empty
+  User.find({polls: {$gt: []}}, (err, users) => {
+    const polls = map(users,(user) => user.polls);
+    let list = [];
+    //it is a nested array, cannot use map to drop an outside array
+    for(let i=0;i<polls.length;i++){
+    	for(let j=0;j<polls[i].length;j++){
+        if(polls[i][j]){
+          list.push(polls[i][j])
+        }
+    	}
+    }
     if(list){
       res.json(list)
     } else {
@@ -93,6 +103,14 @@ Router.get('/signup/:name', (req, res) => {
     } else {
       res.send({})
     }
+  })
+})
+
+Router.get('/polls/:id', (req, res) => {
+  //get a sub-document
+  User.findOne({'polls._id': req.params.id}, (err, user) => {
+    let doc = user.polls.id(req.params.id);
+    res.json(doc);
   })
 })
 

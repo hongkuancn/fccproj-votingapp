@@ -3,10 +3,17 @@ import { fetchList } from './actions/public';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
+import find from 'lodash/find';
+import PollPage from './PollPage'
 
 class ListPage extends React.Component {
   state = {
-    pollslist: []
+    pollslist: [],
+    chosenPoll: {}
+  }
+
+  componentWillMount(){
+    this.setState({ chosenPoll: {}})
   }
 
   componentDidMount(){
@@ -15,39 +22,42 @@ class ListPage extends React.Component {
     )
   }
 
-  handleClick = (e) => {
-    e.preventDefault();
-    this.props.history.push('/private')
+  handleClick = (id) => {
+    const { pollslist } = this.state;
+    const poll = find(pollslist, obj => {
+        return obj._id === id
+    })
+    this.setState({ chosenPoll: poll })
   }
 
   render(){
-    const list = (
-      map(this.state.pollslist, user => {
-        return map(user, poll =>  (
-            <li key={poll._id} className="list-group-item list-group-item-action list-group-item-default lb-lg text-center" onClick={this.handleClick}>{poll.topic}</li>
-          )
-        )
-      })
-    )
-  // render(){
-  //   const list = (
-  //     map(this.state.pollslist, user => {
-  //       return map(user, poll =>  {
-  //         console.log(poll);
-  //         return (
-  //           <li key={poll.id}>{poll.topic}</li>
-  //         )
-  //       }
-  //       )
-  //     })
-  //   )
+    const { pollslist, chosenPoll } = this.state;
+    console.log(chosenPoll);
 
-    return (
+    const polls = (
+      map(pollslist, poll =>   (
+            <li key={poll._id} className="list-group-item list-group-item-action list-group-item-default lb-lg text-center" onClick={() => this.handleClick(poll._id)}>{poll.topic}</li>
+          )
+      )
+    )
+
+    const list = (
       <div className="container" id="listPage">
+
+        <h1 className="list-header">Votex</h1>
+        <p className="lead">Below are polls hosted by Votex.</p>
+        <p className="lead">Select a poll to see the results and vote, or sign-in to make a new poll.</p>
+
         <ul className="list-group">
-          {list}
+          {polls}
         </ul>
       </div>
+    )
+
+    return (
+      <React.Fragment>
+      { chosenPoll.topic ? <PollPage /> : list }
+      </React.Fragment>
     )
   }
 };

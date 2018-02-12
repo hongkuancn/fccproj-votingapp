@@ -55,7 +55,7 @@ class ListPage extends React.Component {
 
     return (
       <React.Fragment>
-      { chosenPoll.topic ? <PollPage /> : list }
+      { chosenPoll.topic ? <PollPage poll={this.state.chosenPoll}/> : list }
       </React.Fragment>
     )
   }

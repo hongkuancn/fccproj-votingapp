@@ -79,6 +79,12 @@ export function isUserExist(name){
 
 export function fetchPoll(id){
   return dispatch => {
-    return axios.get(`api/public/polls/${id}`)
+    return axios.get(`/api/public/polls/${id}`)
+  }
+}
+
+export function vote(data){
+  return dispatch => {
+    return axios.put('/api/public/vote', data)
   }
 }

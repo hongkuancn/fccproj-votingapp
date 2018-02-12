@@ -11,13 +11,17 @@ Router.post('/newpoll', authentication, (req, res) => {
     if (err){
       res.status(400).json({error: "Fail to add a new poll!"})
     }
-    user.polls.push(req.body);
-    user.save((err, updateUser) => {
-      if (err) {
-        res.status(400).json({error: "Fail to add a new poll!"})
-      }
-      res.json(updateUser);
-    })
+    if(req.body){
+      user.polls.push(req.body);
+      user.save((err, updateUser) => {
+        if (err) {
+          res.status(400).json({error: "Fail to add a new poll!"})
+        }
+        res.json({ success: "Add a new poll successfully!"});
+      })
+    } else {
+      res.status(400).json({error: "Fail to add a new poll!"})
+    }
   })
 })
 

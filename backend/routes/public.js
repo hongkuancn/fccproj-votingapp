@@ -106,11 +106,26 @@ Router.get('/signup/:name', (req, res) => {
   })
 })
 
-Router.get('/polls/:id', (req, res) => {
-  //get a sub-document
-  User.findOne({'polls._id': req.params.id}, (err, user) => {
-    let doc = user.polls.id(req.params.id);
-    res.json(doc);
+Router.put('/vote', (req, res) => {
+
+  const { _id, option } = req.body;
+
+  User.findOne({'polls._id': _id}, (err, user) => {
+    //get a sub-document by id
+    const doc = user.polls.id(_id);
+    //find the chosen option
+    for(let i=0; i<doc.options.length; i++){
+      if (doc["options"][i]["name"] === option){
+        doc["options"][0]["times"] = doc["options"][0]["times"] + 1;
+      }
+    }
+
+    user.save((err, updateUser) => {
+      if (err) {
+        res.status(400).json({error: "Fail to vote!"})
+      }
+      res.json({ success: "Vote successfully!"});
+    })
   })
 })
 

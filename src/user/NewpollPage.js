@@ -31,9 +31,7 @@ class NewpollPage extends React.Component {
         }
       })
       this.props.addNewPoll({ topic, options: convertopt })
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err.response))
-        // .catch(err => this.setState({ errors: err.response.data }))
+        .catch(err => this.setState({ errors: err.response.data }))
     }
   }
 

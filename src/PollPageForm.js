@@ -1,15 +1,18 @@
 import React from "react";
 import { connect } from 'react-redux'
 import { vote } from './actions/public';
+import { deletePoll } from './actions/user';
 import PropTypes from 'prop-types';
 import map from 'lodash/map'
-import PollPageChart from './PollPageChart'
+import PollPageChart from './PollPageChart';
+import { Redirect } from 'react-router-dom'
 
 class PollPageForm extends React.Component {
   state = {
     option: this.props.poll.options[0].name,
     newOption: '',
-    disable: false
+    disable: false,
+    redirect: false
   }
 
   handleChange = (e) => {
@@ -28,11 +31,22 @@ class PollPageForm extends React.Component {
       .catch(err => console.log(err.response))
   }
 
-  render(){
-    console.log("form rerender")
+  handleClick = (id) => {
+    this.props.deletePoll(id)
+      .then(res => this.setState({ redirect: true }))
+  }
 
-    const { poll } = this.props;
-    const { newOption, disable } = this.state;
+  render(){
+
+
+    const { poll, isAuthenticated } = this.props;
+    const { newOption, disable, redirect } = this.state;
+
+    //after delete the poll, redirect to index page
+    if (redirect) {
+       return <Redirect to='/'/>;
+     }
+
     const options = (
       map(poll.options, (option, index) =>
         <option value={option.name} key={index}>{option.name}</option>
@@ -51,6 +65,7 @@ class PollPageForm extends React.Component {
             </div>
             <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
             <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
+            { isAuthenticated && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
           </form>
         </div>
         <PollPageChart poll={poll} newOption={newOption}/>
@@ -59,4 +74,16 @@ class PollPageForm extends React.Component {
   }
 };
 
-export default connect(null, { vote })(PollPageForm);
+PollPageForm.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  vote: PropTypes.func.isRequired,
+  deletePoll: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state){
+  return {
+    isAuthenticated: state.Auth.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps, { vote, deletePoll })(PollPageForm);

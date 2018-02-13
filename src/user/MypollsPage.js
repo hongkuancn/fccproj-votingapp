@@ -46,8 +46,8 @@ class Mypollspage extends React.Component {
       <div className="container" id="listPage">
 
         <h1 className="list-header">Votex</h1>
-        <p className="lead">Below are polls hosted by Votex.</p>
-        <p className="lead">Select a poll to see the results and vote, or <Link to="/private/newpoll">make a new poll.</Link></p>
+        <p className="lead">Below are your polls.</p>
+        <p className="lead">Select a poll to see the results and vote, or <Link to="/private/newpoll">make a new poll</Link>.</p>
 
         <ul className="list-group">
           {polls}

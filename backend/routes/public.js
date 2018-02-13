@@ -123,7 +123,7 @@ Router.post('/vote', (req, res) => {
       if (err) {
         res.status(400).json({error: "Fail to vote!"})
       }
-      res.json({ success: "Vote successfully!"});
+      res.json({ message: "Vote successfully!"});
     })
   })
 })

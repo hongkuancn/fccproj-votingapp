@@ -25,12 +25,15 @@ class NewpollPage extends React.Component {
     this.setState({ errors })
     if(isValid){
       const opt = options.split(/[\r\n]+/);
-      const convertopt = opt.map(item => {
-        if(item){
+      const filteropt = opt.filter(item => item !== '');
+      const convertopt = filteropt.map(item => {
+        if(item !== ""){
           return { name: item }
         }
       })
+      console.log(convertopt)
       this.props.addNewPoll({ topic, options: convertopt })
+        .then(res => this.props.history.push('/private/mypolls'))
         .catch(err => this.setState({ errors: err.response.data }))
     }
   }

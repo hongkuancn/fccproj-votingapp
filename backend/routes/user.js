@@ -17,7 +17,7 @@ Router.post('/newpoll', authentication, (req, res) => {
         if (err) {
           res.status(400).json({error: "Fail to add a new poll!"})
         }
-        res.json({ success: "Add a new poll successfully!"});
+        res.json({ message: "Add a new poll successfully!"});
       })
     } else {
       res.status(400).json({error: "Fail to add a new poll!"})
@@ -28,7 +28,6 @@ Router.post('/newpoll', authentication, (req, res) => {
 //fetch one user's polls
 Router.get('/:id', (req, res) => {
   //first find user by id
-  console.log(req.params.id)
   User.findOne({ _id : req.params.id }, (err, user) => {
     if (err){
       res.status(400).json({error: "Fail to find the user!"})
@@ -46,5 +45,17 @@ Router.get('/:id', (req, res) => {
   }
 )})
 
+//delete a poll
+Router.delete('/:id', (req, res) => {
+
+  User.findOne({'polls._id': req.params.id}, (err, user) => {
+    //remove the sub-document by id
+    user.polls.id(req.params.id).remove();
+
+    user.save((err, updateUser) => {
+      res.json({ message: "Delete the poll successfully!"});
+    })
+  })
+})
 
 export default Router;

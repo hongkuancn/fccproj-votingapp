@@ -13,7 +13,7 @@ export function authenticated(data){
   }
 }
 
-function addMessage(message){
+export function addMessage(message){
   return {
     type: ADD_MESSAGE,
     message
@@ -35,7 +35,6 @@ export function signupUser(userData){
       })
       .then(res => {
         dispatch(addMessage(res.data.message));
-        console.log(res.data.message);
         return res;
       })
   }

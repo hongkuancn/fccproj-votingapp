@@ -25,24 +25,23 @@ Router.post('/newpoll', authentication, (req, res) => {
   })
 })
 
-//fetch existed polls
-Router.get('/list', (req, res) => {
-  //first fetch user whose poll is not empty
-  User.findOne({polls: {$gt: []}}, (err, users) => {
-    const polls = map(users,(user) => user.polls);
-    let list = [];
-    //it is a nested array, cannot use map to drop an outside array
-    for(let i=0;i<polls.length;i++){
-    	for(let j=0;j<polls[i].length;j++){
-        if(polls[i][j]){
-          list.push(polls[i][j])
-        }
-    	}
+//fetch one user's polls
+Router.get('/:id', (req, res) => {
+  //first find user by id
+  console.log(req.params.id)
+  User.findOne({ _id : req.params.id }, (err, user) => {
+    if (err){
+      res.status(400).json({error: "Fail to find the user!"})
     }
-    if(list){
-      res.json(list)
+    if(user){
+      const list = user.polls;
+      if(list){
+        res.json(list)
+      } else {
+        res.json({})
+      }
     } else {
-      res.json({})
+      res.status(400).json({error: "Fail to find the user!"})
     }
   }
 )})

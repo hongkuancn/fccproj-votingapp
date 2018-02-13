@@ -12,8 +12,8 @@ class WelcomePage extends React.Component {
       <div>
         <Switch>
           <Route exact path="/private" component={ListPage}/>
-          <Route path="/private/:userid/mypolls" component={MypollsPage}/>
-          <Route path="/private/:userid/newpoll" component={NewpollPage}/>
+          <Route path="/private/mypolls" component={MypollsPage}/>
+          <Route path="/private/newpoll" component={NewpollPage}/>
         </Switch>
       </div>
     )

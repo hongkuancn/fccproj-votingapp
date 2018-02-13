@@ -5,7 +5,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import jwtDecode from 'jwt-decode';
+import setAuthentication from './utils/setAuthentication';
+import { authenticated } from './actions/public'
 
 import './index.css';
 import App from './App';
@@ -18,6 +20,13 @@ const store = createStore(
     applyMiddleware(thunk)
   )
 )
+
+//check if the user has already authenticated
+let token = localStorage["votex-token"];
+if(token){
+  setAuthentication(token);
+  store.dispatch(authenticated(jwtDecode(token)));
+}
 
 ReactDOM.render(
   <Provider store={store}>

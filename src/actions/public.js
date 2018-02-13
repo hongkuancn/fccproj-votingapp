@@ -6,7 +6,7 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
-function authenticated(data){
+export function authenticated(data){
   return {
     type: SET_CURRENT_USER,
     data

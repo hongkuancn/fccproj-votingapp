@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import find from 'lodash/find';
-import PollPage from '../PollPage'
+import PollPage from '../PollPage';
+import { Link } from 'react-router-dom';
 
 class Mypollspage extends React.Component {
   state = {
@@ -18,7 +19,7 @@ class Mypollspage extends React.Component {
 
   componentDidMount(){
     const { id } = this.props;
-    this.props.fetchMyList({id}).then(
+    this.props.fetchMyList(id).then(
       res => this.setState({ pollslist: res.data })
     )
   }
@@ -46,7 +47,7 @@ class Mypollspage extends React.Component {
 
         <h1 className="list-header">Votex</h1>
         <p className="lead">Below are polls hosted by Votex.</p>
-        <p className="lead">Select a poll to see the results and vote, or sign-in to make a new poll.</p>
+        <p className="lead">Select a poll to see the results and vote, or <Link to="/private/newpoll">make a new poll.</Link></p>
 
         <ul className="list-group">
           {polls}

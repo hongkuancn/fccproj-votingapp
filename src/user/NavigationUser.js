@@ -9,15 +9,15 @@ class NavigationUser extends React.Component {
         <Link to="/private" className="navbar-brand">Votex</Link>
 
         <ul className="navbar-nav ml-auto">
-          <li><a className="nav-link disabled">Welcome {username}</a>
+          <li><a className="nav-link disabled mr-3">Welcome {username}</a>
           </li>
-          <li>
-            <Link to="/private/:userid/mypolls" className="nav-link">My Polls</Link>
+          <li className="nav-item mr-3">
+            <Link to="/private/mypolls" className="nav-link">My Polls</Link>
           </li>
-          <li>
-            <Link to="/private/:userid/newpoll" className="nav-link">New Poll</Link>
+          <li className="nav-item mr-3">
+            <Link to="/private/newpoll" className="nav-link">New Poll</Link>
           </li>
-          <li>
+          <li className="nav-item">
             <Link to="/" className="nav-link">Log out</Link>
           </li>
         </ul>

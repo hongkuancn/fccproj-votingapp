@@ -7,8 +7,8 @@ export function addNewPoll(data){
   }
 }
 
-export function fetchMyList(data){
+export function fetchMyList(id){
   return dispatch => {
-    return axios.get('/api/user/list', data);
+    return axios.get(`/api/private/${id}`);
   }
 }

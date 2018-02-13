@@ -12,10 +12,6 @@ class PollPageForm extends React.Component {
     disable: false
   }
 
-  componentDidMount(){
-    alert('You have only one chance. Please think carefully before you vote.')
-  }
-
   handleChange = (e) => {
     this.setState({ option: e.target.value })
   }

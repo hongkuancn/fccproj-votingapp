@@ -45,7 +45,7 @@ Router.get('/list', (req, res) => {
     if(list){
       res.json(list)
     } else {
-      res.json(null)
+      res.json({})
     }
   }
 )})
@@ -106,8 +106,7 @@ Router.get('/signup/:name', (req, res) => {
   })
 })
 
-Router.put('/vote', (req, res) => {
-
+Router.post('/vote', (req, res) => {
   const { _id, option } = req.body;
 
   User.findOne({'polls._id': _id}, (err, user) => {
@@ -116,7 +115,7 @@ Router.put('/vote', (req, res) => {
     //find the chosen option
     for(let i=0; i<doc.options.length; i++){
       if (doc["options"][i]["name"] === option){
-        doc["options"][0]["times"] = doc["options"][0]["times"] + 1;
+        doc["options"][i]["times"] = doc["options"][i]["times"] + 1;
       }
     }
 
@@ -126,6 +125,18 @@ Router.put('/vote', (req, res) => {
       }
       res.json({ success: "Vote successfully!"});
     })
+  })
+})
+
+Router.get('/polls/:id', (req, res) => {
+  User.findOne({'polls._id': req.params.id}, (err, user) => {
+    //get a sub-document by id
+    const doc = user.polls.id(req.params.id);
+    if(doc){
+      res.json(doc);
+    } else {
+      res.status(400).json({error: "Fail to load the poll!"})
+    }
   })
 })
 

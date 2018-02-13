@@ -6,3 +6,9 @@ export function addNewPoll(data){
       .then(res => console.log(res.data));
   }
 }
+
+export function fetchMyList(data){
+  return dispatch => {
+    return axios.get('/api/user/list', data);
+  }
+}

@@ -1,6 +1,5 @@
 import React from "react";
 import PollPageForm from './PollPageForm'
-import PollPageChart from './PollPageChart'
 
 class PollPage extends React.Component {
   render(){
@@ -9,7 +8,6 @@ class PollPage extends React.Component {
       <div className="container-fluid">
         <div className="row">
         <PollPageForm poll={poll}/>
-        <PollPageChart poll={poll}/>
         </div>
       </div>
     )

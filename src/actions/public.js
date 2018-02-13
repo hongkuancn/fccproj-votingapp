@@ -85,6 +85,7 @@ export function fetchPoll(id){
 
 export function vote(data){
   return dispatch => {
-    return axios.put('/api/public/vote', data)
+    return axios.post('/api/public/vote', data)
+      .then(res => {console.log(res); return res})
   }
 }

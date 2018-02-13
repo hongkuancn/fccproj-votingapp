@@ -1,5 +1,5 @@
 import axios from 'axios';
-import setAuthentication from '../utils/setAuthentication';
+import setAuthenticationToken from '../utils/setAuthenticationToken';
 import jwtDecode from 'jwt-decode';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
@@ -29,10 +29,10 @@ function deleteMessage(){
 export function signupUser(userData){
   return dispatch => {
     return axios.post('/api/public/signup', userData)
-      .then(response => {
-      	console.log(response);
-        return response;
-      })
+      // .then(response => {
+      // 	console.log(response);
+      //   return response;
+      // })
       .then(res => {
         dispatch(addMessage(res.data.message));
         return res;
@@ -49,14 +49,14 @@ export function fetchList(){
 export function loginUser(userData){
   return dispatch => {
     return axios.post('/api/public/login', userData)
-      .then(res => {
-      	console.log(res);
-        return res;
-      })
+      // .then(res => {
+      // 	console.log(res);
+      //   return res;
+      // })
       .then(res => {
         const token = res.data.token;
         localStorage.setItem('votex-token', token);
-        setAuthentication(token);
+        setAuthenticationToken(token);
         dispatch(authenticated(jwtDecode(token)));
         dispatch(addMessage(res.data.message));
         return res;
@@ -85,6 +85,6 @@ export function fetchPoll(id){
 export function vote(data){
   return dispatch => {
     return axios.post('/api/public/vote', data)
-      .then(res => {console.log(res); return res})
+      // .then(res => {console.log(res); return res})
   }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { addMessage } from './public'
+import { addMessage, authenticated } from './public';
+import setAuthenticationToken from '../utils/setAuthenticationToken';
 
 export function addNewPoll(data){
   return dispatch => {
@@ -24,5 +25,14 @@ export function deletePoll(id){
         dispatch(addMessage(res.data.message));
         return res;
       })
+  }
+}
+
+export function logout(){
+  return dispatch => {
+    localStorage.removeItem('votex-token');
+    dispatch(authenticated({}));
+    setAuthenticationToken(false);
+    dispatch(addMessage("Log out successfully!"))
   }
 }

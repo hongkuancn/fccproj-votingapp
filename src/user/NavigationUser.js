@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { logout } from '../actions/user';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class NavigationUser extends React.Component {
+  handleClick = (e) => {
+    e.preventDefault();
+    this.props.logout();
+  }
+
   render(){
     const { username } = this.props;
     return (
@@ -17,7 +25,7 @@ class NavigationUser extends React.Component {
           <li className="nav-item mr-3">
             <Link to="/private/newpoll" className="nav-link">New Poll</Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" onClick={this.handleClick}>
             <Link to="/" className="nav-link">Log out</Link>
           </li>
         </ul>
@@ -26,4 +34,8 @@ class NavigationUser extends React.Component {
   }
 };
 
-export default NavigationUser;
+NavigationUser.propTypes = {
+  logout: PropTypes.func.isRequired
+}
+
+export default connect(null, { logout })(NavigationUser);

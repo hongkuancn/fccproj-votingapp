@@ -77,7 +77,7 @@ Router.post('/login', (req, res, next) => {
             username: user.username,
             id: user._id.toString()
           }, 'keyforjwt')
-          res.json({token, user, message: 'Logged in successfully!'})
+          res.json({token, user, message: 'Log in successfully!'})
         } else {
           errors.login = "Invalid username/password pair";
           res.status(401).json(errors)

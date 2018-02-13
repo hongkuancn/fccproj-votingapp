@@ -20,7 +20,6 @@ class PollPageChart extends React.Component {
       }
     } else {
       // if not, keep poll the same
-      poll = poll;
     }
 
     //set an object which contains the data of the chart

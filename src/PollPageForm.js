@@ -24,10 +24,8 @@ class PollPageForm extends React.Component {
     const { _id } = this.props.poll;
     const { option } = this.state;
     //Option has a default value. Even user doesn't choose a option, it will pass to the child component. newOption is empty by default, so when it has a value, the value is the user's choice.
-    this.setState({ newOption: option, disable: true });
-    alert("Vote successfully! Thank you!")
+    this.setState({ newOption: option, disable: true, option: '' });
     this.props.vote({ _id, option})
-      .then(res => console.log(res))
       .catch(err => console.log(err.response))
   }
 
@@ -37,8 +35,6 @@ class PollPageForm extends React.Component {
   }
 
   render(){
-
-
     const { poll, isAuthenticated } = this.props;
     const { newOption, disable, redirect } = this.state;
 
@@ -59,10 +55,11 @@ class PollPageForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">I'd like to vote for...</label>
-              <select value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange}>
+              <select value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
                 {options}
               </select>
             </div>
+
             <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
             <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
             { isAuthenticated && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}

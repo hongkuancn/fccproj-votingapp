@@ -27,9 +27,7 @@ class NewpollPage extends React.Component {
       const opt = options.split(/[\r\n]+/);
       const filteropt = opt.filter(item => item !== '');
       const convertopt = filteropt.map(item => {
-        if(item !== ""){
           return { name: item }
-        }
       })
       console.log(convertopt)
       this.props.addNewPoll({ topic, options: convertopt })
@@ -50,7 +48,8 @@ class NewpollPage extends React.Component {
           {errors.topic  && (
             <div className="alert alert-danger" role="alert">
               {errors.topic}
-            </div>)}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label className="lb-lg">Options (seperated by line):</label>
@@ -59,7 +58,8 @@ class NewpollPage extends React.Component {
           {errors.options  && (
             <div className="alert alert-danger" role="alert">
               {errors.options}
-            </div>)}
+            </div>
+          )}
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

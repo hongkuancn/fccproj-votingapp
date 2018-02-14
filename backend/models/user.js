@@ -12,7 +12,8 @@ const OptionSchema = new Schema({
 
 const PollSchema = new Schema({
   topic: String,
-  options: [OptionSchema]
+  options: [OptionSchema],
+  ipaddress: [String]
 })
 
 const UserSchema = new Schema({

@@ -25,10 +25,10 @@ class App extends Component {
         { isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
         { message && <FlashMessage message={message} closeMessage={this.props.closeMessage}/> }
         <Switch>
-         <Route exact path="/" component={ListPage} />
          <Route path="/signup" component={SignupPage} />
          <Route path="/login" component={LoginPage} />
          <PrivateRoute path="/private" component={WelcomePage} isAuthenticated={isAuthenticated} username={username}/>
+         <Route path="/" component={ListPage} />
        </Switch>
       </div>
     );

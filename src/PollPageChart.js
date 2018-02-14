@@ -8,7 +8,6 @@ class PollPageChart extends React.Component {
 
   render(){
     let { poll } = this.props;
-    console.log(poll)
     //set an object which contains the data of the chart
     let data = {
       labels: [],

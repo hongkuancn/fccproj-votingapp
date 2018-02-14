@@ -6,7 +6,9 @@ import loginValidation from '../validators/login';
 import User from '../models/user';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
+import findIndex from 'lodash/findIndex';
 import jwt from 'jsonwebtoken';
+import pubip from 'publicip';
 
 const Router = express.Router();
 
@@ -65,6 +67,21 @@ Router.post('/signup', (req, res, next) => {
   })
 })
 
+//This is for onBlur property when user signs up. Check if there is user with such username
+Router.get('/signup/:name', (req, res) => {
+  let errors = {};
+  User.findOne({username: req.params.name}).then(user => {
+    if(user){
+      if (user.username === req.params.name){
+        errors.username = "There is user with this username!";
+      }
+      res.status(400).json(errors)
+    } else {
+      res.send({})
+    }
+  })
+})
+
 //login route
 Router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
@@ -92,41 +109,50 @@ Router.post('/login', (req, res, next) => {
   }
 })
 
-Router.get('/signup/:name', (req, res) => {
-  let errors = {};
-  User.findOne({username: req.params.name}).then(user => {
-    if(user){
-      if (user.username === req.params.name){
-        errors.username = "There is user with this username!";
-      }
-      res.status(400).json(errors)
-    } else {
-      res.send({})
-    }
+function checkIp(id){
+  User.findOne({'polls._id': id}, (err, user) => {
+    //get a sub-document by id
+    let index;
+    let doc = user.polls.id(id);
+    pubip.v4().then(ip => {
+      console.log("ok")
+      const index = findIndex(doc.ipaddress, item => item === ip);
+    })
+    return index;
   })
-})
-
+}
 
 //handle vote action
 Router.post('/vote', (req, res) => {
   const { _id, option } = req.body;
-
+  // const index = checkIp(_id);
+  // console.log(index)
   User.findOne({'polls._id': _id}, (err, user) => {
-    //get a sub-document by id
-    let doc = user.polls.id(_id);
-    //find the chosen option
-    map(doc.options, opt => {
-      if(opt["name"] === option){
-        opt["times"]++;
-      }
-    })
+    pubip.v4().then(ip => {
+      //get a sub-document by id
+      let doc = user.polls.id(_id);
+      const index = findIndex(doc.ipaddress, item => item === ip);
+      //when the ip has already voted
+      if(index > -1 ){
+        res.status(400).json({error: "Every IP address can vote once a poll!"})
+      } else {
+        //add ip address to db
+        doc.ipaddress.push(ip);
+        //find the chosen option
+        map(doc.options, opt => {
+          if(opt["name"] === option){
+            opt["times"]++;
+          }
+        })
 
-    user.save((err, updateUser) => {
-      if (err) {
-        res.status(400).json({error: "Fail to vote!"})
+        user.save((err, updateUser) => {
+          if (err) {
+            res.status(400).json({error: "Fail to vote!"})
+          }
+          res.json({ message: "Vote successfully!", doc});
+        })
       }
-      res.json({ message: "Vote successfully!", doc});
-    })
+    });
   })
 })
 

@@ -26,7 +26,7 @@ class PollPageForm extends React.Component {
     if(option !== "Choose an option..."){
       this.setState({ disable: true, option });
       this.props.vote({ _id, option})
-        .catch(err => console.log(err.response))
+        .catch(err => alert(err.response.data.error))
     } else if (option === "Choose an option..."){
       alert("Please choose an option.")
     } else if ("I'd like to add a custom option..."){
@@ -89,7 +89,7 @@ class PollPageForm extends React.Component {
           </div>
           { option === "I want to add a custom option..." && newoptionform}
 
-          <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
+          <button className="btn btn-primary btn-block" type="submit">Vote</button>
           <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
           { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
         </form>

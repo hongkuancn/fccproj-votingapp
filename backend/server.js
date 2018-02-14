@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import publicRouter from './routes/public';
 import privateRouter from './routes/user';
-import pubip from 'publicip'
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,10 +16,6 @@ mongoose.connect(dbURL, () => {
 
 app.use('/api/public', publicRouter);
 app.use('/api/private', privateRouter);
-
-pubip.v4().then(ip => {
-    console.log(ip);
-});
 
 app.use((req, res) => {
   res.status(404).json({

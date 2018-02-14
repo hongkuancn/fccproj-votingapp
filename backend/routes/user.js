@@ -46,7 +46,7 @@ Router.get('/:id', authentication, (req, res) => {
 )})
 
 //delete a poll
-Router.delete('/:id', (req, res) => {
+Router.delete('/:id', authentication, (req, res) => {
 
   User.findOne({'polls._id': req.params.id}, (err, user) => {
     //remove the sub-document by id

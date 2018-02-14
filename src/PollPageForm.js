@@ -71,26 +71,23 @@ class PollPageForm extends React.Component {
     const sameUser = userid === id;
 
     return (
-      <React.Fragment>
-        <div className="col-6">
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="exampleFormControlSelect1">I'd like to vote for...</label>
-              <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
-                <option value="Choose an option...">Choose an option...</option>
-                {options}
-                <option value="I want to add a custom option...">I want to add a custom option...</option>
-              </select>
-            </div>
-            { option === "I want to add a custom option..." && newoptionform}
+      <div className="col-6">
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="exampleFormControlSelect1">I'd like to vote for...</label>
+            <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
+              <option value="Choose an option...">Choose an option...</option>
+              {options}
+              <option value="I want to add a custom option...">I want to add a custom option...</option>
+            </select>
+          </div>
+          { option === "I want to add a custom option..." && newoptionform}
 
-            <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
-            <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
-            { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
-          </form>
-        </div>
-        <PollPageChart poll={poll} chosenOption={chosenOption}/>
-      </React.Fragment>
+          <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
+          <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
+          { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
+        </form>
+      </div>
     )
   }
 };

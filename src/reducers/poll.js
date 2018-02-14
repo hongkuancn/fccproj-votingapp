@@ -6,11 +6,6 @@ export default function(state={}, action={}){
       return {
         poll: action.poll
       }
-    // case VOTE_POLL:
-    //   return {
-    //     message: ''
-    //   }
-
     default: return state;
   }
 }

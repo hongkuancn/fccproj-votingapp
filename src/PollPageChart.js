@@ -1,27 +1,14 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
-
+import { connect } from 'react-redux';
+import map from 'lodash/map';
 
 class PollPageChart extends React.Component {
 
   render(){
     let { poll } = this.props;
-
-    //rename the property
-    const {chosenOption: option} = this.props;
-
-    // option is not empty, add 1 to the option
-    if(option.length > 0){
-      for(let i=0; i<poll.options.length; i++){
-        if (poll["options"][i]["name"] === option){
-          poll["options"][i]["times"] = poll["options"][i]["times"] + 1;
-        }
-      }
-    } else {
-      // if not, keep poll the same
-    }
-
+    console.log(poll)
     //set an object which contains the data of the chart
     let data = {
       labels: [],
@@ -42,17 +29,9 @@ class PollPageChart extends React.Component {
       ]
     }
     //set labels of chart
-    for(let i=0; i<poll.options.length; i++){
-      if (poll["options"][i]["name"]){
-        data.labels.push(poll["options"][i]["name"]);
-      }
-    }
+    map(poll.options, option => data.labels.push(option["name"]))
     //set votes of each option
-    for(let i=0; i<poll.options.length; i++){
-      if (poll["options"][i]["name"]){
-        data.datasets[0].data.push(poll["options"][i]["times"]);
-      }
-    }
+    map(poll.options, option => data.datasets[0].data.push(option["times"]))
     // set title of the poll
     let { topic } = poll;
 
@@ -77,4 +56,14 @@ class PollPageChart extends React.Component {
   }
 };
 
-export default PollPageChart;
+PollPageChart.propTypes = {
+  poll: PropTypes.object
+}
+
+function mapStateToProps(state){
+  return {
+    poll: state.Poll.poll
+  }
+}
+
+export default connect(mapStateToProps, {})(PollPageChart);

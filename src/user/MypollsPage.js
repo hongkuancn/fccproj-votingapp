@@ -1,5 +1,6 @@
 import React from "react";
 import { fetchMyList } from '../actions/user';
+import { fetchPoll } from '../actions/public';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
@@ -26,10 +27,8 @@ class Mypollspage extends React.Component {
 
   handleClick = (id) => {
     const { pollslist } = this.state;
-    const poll = find(pollslist, obj => {
-        return obj._id === id
-    })
-    this.setState({ chosenPoll: poll })
+    this.props.fetchPoll(id)
+      .then(res => this.setState({ chosenPoll: res.data.doc }))
   }
 
   render(){
@@ -64,7 +63,8 @@ class Mypollspage extends React.Component {
 };
 
 Mypollspage.propTypes = {
-  fetchMyList: PropTypes.func.isRequired
+  fetchMyList: PropTypes.func.isRequired,
+  fetchPoll: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state){
@@ -73,4 +73,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, { fetchMyList })(Mypollspage);
+export default connect(mapStateToProps, { fetchMyList, fetchPoll })(Mypollspage);

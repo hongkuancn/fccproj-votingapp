@@ -41,3 +41,8 @@ ul.list-group {
 form.container-fluid {
   padding: 0 25% 10% 25%;
 }
+
+#twitterbutton{
+  color: #fff;
+  text-decoration: none;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux'
-import { vote, addOption } from './actions/public';
+import { vote, addOption  } from './actions/public';
 import { deletePoll } from './actions/user';
 import PropTypes from 'prop-types';
 import map from 'lodash/map'
@@ -48,10 +48,22 @@ class PollPageForm extends React.Component {
       .catch(err => console.log(err.response))
   }
 
+  handleShareClick = () => {
+    const { poll } = this.props;
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(`${poll.topic} from Votex | `);
+    const href = `https://twitter.com/share?url=${url}&text=${text}`;
+    window.open(href)
+  }
+
   render(){
     //id is from redux, userid is from parent component
     const { poll, isAuthenticated, userid, id } = this.props;
     const { disable, redirect, option } = this.state;
+
+    // const url = encodeURIComponent(window.location.href);
+    // const text = encodeURIComponent(`${poll.topic} from Votex | `);
+    // const href = `https://twitter.com/share?url=${url}&text=${text}`;
 
     //after delete the poll, redirect to index page
     if (redirect) {
@@ -87,10 +99,10 @@ class PollPageForm extends React.Component {
               <option value="I'd like to add a custom option...">I'd like to add a custom option...</option>
             </select>
           </div>
-          { option === "I want to add a custom option..." && newoptionform}
+          { option === "I'd like to add a custom option..." && newoptionform}
 
           <button className="btn btn-primary btn-block" type="submit">Vote</button>
-          <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
+          <button className="btn btn-primary btn-block" type="button" onClick={this.handleShareClick}>Share on Twitter</button>
           { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
         </form>
       </div>

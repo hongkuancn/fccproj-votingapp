@@ -9,7 +9,7 @@ class PollPageChart extends React.Component {
     let { poll } = this.props;
 
     //rename the property
-    const {newOption: option} = this.props;
+    const {chosenOption: option} = this.props;
 
     // option is not empty, add 1 to the option
     if(option.length > 0){

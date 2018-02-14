@@ -26,7 +26,7 @@ Router.post('/newpoll', authentication, (req, res) => {
 })
 
 //fetch one user's polls
-Router.get('/:id', (req, res) => {
+Router.get('/:id', authentication, (req, res) => {
   //first find user by id
   User.findOne({ _id : req.params.id }, (err, user) => {
     if (err){

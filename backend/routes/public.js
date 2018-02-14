@@ -111,7 +111,7 @@ Router.post('/vote', (req, res) => {
 
   User.findOne({'polls._id': _id}, (err, user) => {
     //get a sub-document by id
-    const doc = user.polls.id(_id);
+    let doc = user.polls.id(_id);
     //find the chosen option
     for(let i=0; i<doc.options.length; i++){
       if (doc["options"][i]["name"] === option){
@@ -123,21 +123,42 @@ Router.post('/vote', (req, res) => {
       if (err) {
         res.status(400).json({error: "Fail to vote!"})
       }
-      res.json({ message: "Vote successfully!"});
+      res.json({ message: "Vote successfully!", doc});
     })
   })
 })
 
+//fetch a poll and its userid
 Router.get('/polls/:id', (req, res) => {
   User.findOne({'polls._id': req.params.id}, (err, user) => {
     const id = user._id;
-    console.log(id)
     //get a sub-document by id
     const doc = user.polls.id(req.params.id);
     if(doc){
       res.json({doc, id});
     } else {
       res.status(400).json({error: "Fail to load the poll!"})
+    }
+  })
+})
+
+//add a new option
+Router.post('/addoption', (req, res) => {
+  const { _id, newOption } = req.body;
+
+  User.findOne({'polls._id': _id}, (err, user) => {
+    //get a sub-document by id
+    const doc = user.polls.id(_id);
+    if(doc){
+      doc.options.push({name: newOption});
+      user.save((err, updateUser) => {
+        if (err) {
+          res.status(400).json({error: "Fail to add a new option!"})
+        }
+        res.json({ message: "Add a new option successfully!", doc});
+      })
+    } else {
+      res.status(400).json({error: "Fail to add a new option!"})
     }
   })
 })

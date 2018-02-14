@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchList } from './actions/public';
+import { fetchList, fetchPoll } from './actions/public';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 class ListPage extends React.Component {
   state = {
     pollslist: [],
-    chosenPoll: {}
+    chosenPoll: {},
+    userid: ''
   }
 
   componentWillMount(){
@@ -25,10 +26,9 @@ class ListPage extends React.Component {
 
   handleClick = (id) => {
     const { pollslist } = this.state;
-    const poll = find(pollslist, obj => {
-        return obj._id === id
-    })
-    this.setState({ chosenPoll: poll })
+    // chosenPoll state can be set by munipulted the above pollslist directly. In that case I cannot get userid to decide whether to show delete button in PollPageForm. Besides, I don't have a good chance to set chosenPoll in redux store, which can rerender PollPageChart later.
+    this.props.fetchPoll(id)
+      .then(res => this.setState({ chosenPoll: res.data.doc, userid: res.data.id}))
   }
 
   render(){
@@ -56,14 +56,15 @@ class ListPage extends React.Component {
 
     return (
       <React.Fragment>
-      { chosenPoll.topic ? <PollPage poll={this.state.chosenPoll}/> : list }
+      { chosenPoll.topic ? <PollPage poll={this.state.chosenPoll} userid={this.state.userid}/> : list }
       </React.Fragment>
     )
   }
 };
 
 ListPage.propTypes = {
-  fetchList: PropTypes.func.isRequired
+  fetchList: PropTypes.func.isRequired,
+  fetchPoll: PropTypes.func.isRequired,
 }
 
-export default connect(null, { fetchList })(ListPage);
+export default connect(null, { fetchList, fetchPoll })(ListPage);

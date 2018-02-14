@@ -35,7 +35,7 @@ class PollPageForm extends React.Component {
   }
 
   render(){
-    const { poll, isAuthenticated } = this.props;
+    const { poll, isAuthenticated, userid, id } = this.props;
     const { newOption, disable, redirect } = this.state;
 
     //after delete the poll, redirect to index page
@@ -48,6 +48,8 @@ class PollPageForm extends React.Component {
         <option value={option.name} key={index}>{option.name}</option>
       )
     )
+
+    const sameUser = userid === id;
 
     return (
       <React.Fragment>
@@ -62,7 +64,7 @@ class PollPageForm extends React.Component {
 
             <button className="btn btn-primary btn-block" type="submit" disabled={disable}>Vote</button>
             <button className="btn btn-primary btn-block" type="button">Share on Twitter</button>
-            { isAuthenticated && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
+            { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
           </form>
         </div>
         <PollPageChart poll={poll} newOption={newOption}/>
@@ -79,7 +81,8 @@ PollPageForm.propTypes = {
 
 function mapStateToProps(state){
   return {
-    isAuthenticated: state.Auth.isAuthenticated
+    isAuthenticated: state.Auth.isAuthenticated,
+    id: state.Auth.id
   }
 }
 

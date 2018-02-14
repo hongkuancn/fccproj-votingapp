@@ -130,10 +130,12 @@ Router.post('/vote', (req, res) => {
 
 Router.get('/polls/:id', (req, res) => {
   User.findOne({'polls._id': req.params.id}, (err, user) => {
+    const id = user._id;
+    console.log(id)
     //get a sub-document by id
     const doc = user.polls.id(req.params.id);
     if(doc){
-      res.json(doc);
+      res.json({doc, id});
     } else {
       res.status(400).json({error: "Fail to load the poll!"})
     }

@@ -3,7 +3,6 @@ import { fetchList, fetchPoll } from './actions/public';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
-import find from 'lodash/find';
 import PollPage from './PollPage';
 import { Link } from 'react-router-dom';
 

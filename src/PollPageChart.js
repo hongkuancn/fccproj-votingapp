@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
 
@@ -23,7 +23,20 @@ class PollPageChart extends React.Component {
             'rgba(75, 192, 192, 0.6)',
             'rgba(153, 102, 255, 0.6)',
             'rgba(255, 159, 64, 0.6)',
-            'rgba(255, 99, 132, 0.6)'
+            'rgba(255, 99, 132, 0.6)',
+            "rgba(62, 149, 205, 0.9)",
+            "rgba(142, 94, 162, 0.9)",
+            "rgba(60, 186, 159, 0.9)",
+            "rgba(232, 195, 184, 0.9)",
+            "rgba(196, 88, 81, 0.9)",
+            "rgba(217, 83, 79, 0.9)",
+            "rgba(249, 249, 249, 0.9)",
+            "rgba(91, 192, 222, 0.9)",
+            "rgba(92, 184, 92, 0.9)",
+            "rgba(65, 138, 201, 0.9)",
+            'rgba(255, 99, 132, 0.3)',
+            'rgba(54, 162, 235, 0.3)',
+            'rgba(255, 206, 86, 0.3)'
           ]
         }
       ]
@@ -38,7 +51,7 @@ class PollPageChart extends React.Component {
     return (
       <div className="col-6">
 
-        <Bar
+        <Pie
         	data={data}
           options={{
             title:{
@@ -47,7 +60,8 @@ class PollPageChart extends React.Component {
               fontSize: 30
             },
             legend:{
-              display: false
+              display: true,
+              position: "bottom"
             }
           }}
         />

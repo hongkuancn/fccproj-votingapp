@@ -106,6 +106,8 @@ Router.get('/signup/:name', (req, res) => {
   })
 })
 
+
+//handle vote action
 Router.post('/vote', (req, res) => {
   const { _id, option } = req.body;
 
@@ -113,11 +115,11 @@ Router.post('/vote', (req, res) => {
     //get a sub-document by id
     let doc = user.polls.id(_id);
     //find the chosen option
-    for(let i=0; i<doc.options.length; i++){
-      if (doc["options"][i]["name"] === option){
-        doc["options"][i]["times"] = doc["options"][i]["times"] + 1;
+    map(doc.options, opt => {
+      if(opt["name"] === option){
+        opt["times"]++;
       }
-    }
+    })
 
     user.save((err, updateUser) => {
       if (err) {
@@ -150,7 +152,7 @@ Router.post('/addoption', (req, res) => {
     //get a sub-document by id
     const doc = user.polls.id(_id);
     if(doc){
-      doc.options.push({name: newOption});
+      doc.options.push({name: newOption, times: 1});
       user.save((err, updateUser) => {
         if (err) {
           res.status(400).json({error: "Fail to add a new option!"})

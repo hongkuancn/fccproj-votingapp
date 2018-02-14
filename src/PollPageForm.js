@@ -4,13 +4,11 @@ import { vote, addOption } from './actions/public';
 import { deletePoll } from './actions/user';
 import PropTypes from 'prop-types';
 import map from 'lodash/map'
-import PollPageChart from './PollPageChart';
 import { Redirect } from 'react-router-dom'
 
 class PollPageForm extends React.Component {
   state = {
     option: "Choose an option...",
-    chosenOption: '',
     disable: false,
     redirect: false,
     newOption: ''
@@ -24,15 +22,23 @@ class PollPageForm extends React.Component {
     e.preventDefault();
     const { _id } = this.props.poll;
     const { option } = this.state;
-    //Option has a default value. Even user doesn't choose a option, it will pass to the child component. chosenOption is empty by default, so when it has a value, the value is the user's choice.
-    this.setState({ chosenOption: option, disable: true, option: '' });
-    this.props.vote({ _id, option})
-      .catch(err => console.log(err.response))
+    // check option value
+    if(option !== "Choose an option..."){
+      this.setState({ disable: true, option });
+      this.props.vote({ _id, option})
+        .catch(err => console.log(err.response))
+    } else if (option === "Choose an option..."){
+      alert("Please choose an option.")
+    } else if ("I'd like to add a custom option..."){
+      alert("Please add a custom option.")
+    }
   }
 
   handleClick = (id) => {
-    this.props.deletePoll(id)
+    if(window.confirm('Do you really want to delete the poll?')){
+      this.props.deletePoll(id)
       .then(res => this.setState({ redirect: true }))
+    }
   }
 
   handleAddClick = (e) => {
@@ -45,7 +51,7 @@ class PollPageForm extends React.Component {
   render(){
     //id is from redux, userid is from parent component
     const { poll, isAuthenticated, userid, id } = this.props;
-    const { chosenOption, disable, redirect, option } = this.state;
+    const { disable, redirect, option } = this.state;
 
     //after delete the poll, redirect to index page
     if (redirect) {
@@ -78,7 +84,7 @@ class PollPageForm extends React.Component {
             <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
               <option value="Choose an option...">Choose an option...</option>
               {options}
-              <option value="I want to add a custom option...">I want to add a custom option...</option>
+              <option value="I'd like to add a custom option...">I'd like to add a custom option...</option>
             </select>
           </div>
           { option === "I want to add a custom option..." && newoptionform}

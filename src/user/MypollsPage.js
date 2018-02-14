@@ -4,14 +4,14 @@ import { fetchPoll } from '../actions/public';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
-import find from 'lodash/find';
 import PollPage from '../PollPage';
 import { Link } from 'react-router-dom';
 
 class Mypollspage extends React.Component {
   state = {
     pollslist: [],
-    chosenPoll: {}
+    chosenPoll: {},
+    userid: ''
   }
 
   componentWillMount(){
@@ -28,7 +28,7 @@ class Mypollspage extends React.Component {
   handleClick = (id) => {
     const { pollslist } = this.state;
     this.props.fetchPoll(id)
-      .then(res => this.setState({ chosenPoll: res.data.doc }))
+      .then(res => this.setState({ chosenPoll: res.data.doc, userid: res.data.id }))
   }
 
   render(){
@@ -56,7 +56,7 @@ class Mypollspage extends React.Component {
 
     return (
       <React.Fragment>
-      { chosenPoll.topic ? <PollPage poll={this.state.chosenPoll}/> : list }
+      { chosenPoll.topic ? <PollPage poll={this.state.chosenPoll} userid={this.state.userid}/> : list }
       </React.Fragment>
     )
   }

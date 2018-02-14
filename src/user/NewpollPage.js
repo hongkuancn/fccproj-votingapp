@@ -29,7 +29,7 @@ class NewpollPage extends React.Component {
       const convertopt = filteropt.map(item => {
           return { name: item }
       })
-      console.log(convertopt)
+
       this.props.addNewPoll({ topic, options: convertopt })
         .then(res => this.props.history.push('/private/mypolls'))
         .catch(err => this.setState({ errors: err.response.data }))
@@ -37,13 +37,13 @@ class NewpollPage extends React.Component {
   }
 
   render(){
-    console.log(this.state.errors);
+
     const { errors } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="container-fluid pt-3">
         <div className="form-group">
           <label className="lb-lg">New Poll</label>
-          <input type="text" className={classnames('form-control', {'is-invalid': errors.topic})} name="topic" value={this.state.topic} onChange={this.handleChange} placeholder="Write a new poll right now!"/>
+          <input type="text" className={classnames('form-control', {'is-invalid': errors.topic})} name="topic" value={this.state.topic} onChange={this.handleChange} placeholder="Add a new poll right now!"/>
 
           {errors.topic  && (
             <div className="alert alert-danger" role="alert">

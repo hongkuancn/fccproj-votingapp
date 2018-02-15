@@ -29,11 +29,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "postinstall": "yarn install --prefix backend",
-    "start": "concurrently \"cd backend && yarn start\" \"cd ./ && yarn run dev \" ",
-    "build:prod": "concurrently \"cd ./ && yarn run build\" \"cd backend && yarn run build\"",
-    "start:prod": "cd backend && yarn run start:prod",
-    "heroku-postbuild": "yarn run build:prod"
+    "install": "(cd backend && yarn) && (cd ./ && yarn)",
+    "start": "concurrently \"cd backend && yarn start\" \"cd ./ && yarn dev \" ",
+    "build:prod": "concurrently \"cd ./ && yarn build\" \"cd backend && yarn build\"",
+    "start:prod": "cd backend && yarn start:prod",
+    "heroku-postbuild": "yarn build:prod"
   },
   "proxy": "http://localhost:8080"
 }

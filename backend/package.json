@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "babel . --ignore node_modules,build --out-dir build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node server.js"
+    "start": "nodemon --exec babel-node ./server.js",
+    "start:prod": "node build/server.js"
   },
   "author": "Hongkuan",
   "license": "ISC",

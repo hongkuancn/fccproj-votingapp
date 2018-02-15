@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "install": "(cd ./ && yarn) && (cd backend && yarn)",
+    "install": "cd backend",
     "start": "concurrently \"cd backend && yarn start\" \"cd ./ && yarn dev \" ",
     "build:prod": "concurrently \"cd ./ && yarn build\" \"cd backend && yarn build\"",
     "start:prod": "cd backend && yarn start:prod",

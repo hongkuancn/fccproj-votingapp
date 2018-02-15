@@ -13,8 +13,8 @@ const staticFiles = express.static(path.join(__dirname, '../../build'));
 // pass the static files (react app) to the express app.
 app.use(staticFiles)
 
-const dbURL = "mongodb://localhost/votingapp";
-// const dbURL = "mongodb://user:user123@ds125388.mlab.com:25388/hk_votingapp";
+// const dbURL = "mongodb://localhost/votingapp";
+const dbURL = "mongodb://user:user123@ds125388.mlab.com:25388/hk_votingapp";
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURL, () => {
   console.log("connected to mongodb");

@@ -45,7 +45,7 @@ class PollPageForm extends React.Component {
     const { newOption } = this.state;
     const { _id } = this.props.poll;
     this.props.addOption({newOption, _id})
-      .catch(err => console.log(err.response))
+      .catch(err => alert(err.response.data.error))
   }
 
   handleShareClick = () => {
@@ -61,11 +61,6 @@ class PollPageForm extends React.Component {
     const { poll, isAuthenticated, userid, id } = this.props;
     const { disable, redirect, option } = this.state;
 
-    // const url = encodeURIComponent(window.location.href);
-    // const text = encodeURIComponent(`${poll.topic} from Votex | `);
-    // const href = `https://twitter.com/share?url=${url}&text=${text}`;
-
-    //after delete the poll, redirect to index page
     if (redirect) {
        return <Redirect to='/'/>;
      }
@@ -89,10 +84,10 @@ class PollPageForm extends React.Component {
     const sameUser = userid === id;
 
     return (
-      <div className="col-6">
-        <form onSubmit={this.handleSubmit}>
+      <div className="col-5">
+        <form onSubmit={this.handleSubmit} className="mt-5 ml-5 pt-5">
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">I'd like to vote for...</label>
+            <label htmlFor="exampleFormControlSelect1" className="lb-slg mb-2">I'd like to vote for...</label>
             <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
               <option value="Choose an option...">Choose an option...</option>
               {options}
@@ -102,7 +97,7 @@ class PollPageForm extends React.Component {
           { option === "I'd like to add a custom option..." && newoptionform}
 
           <button className="btn btn-primary btn-block" type="submit">Vote</button>
-          <button className="btn btn-primary btn-block" type="button" onClick={this.handleShareClick}>Share on Twitter</button>
+          <button className="btn btn-info btn-block" type="button" onClick={this.handleShareClick}>Share on Twitter</button>
           { isAuthenticated && sameUser && <button className="btn btn-danger btn-block" type="button" onClick={() => this.handleClick(poll._id)}>Delete the poll</button>}
         </form>
       </div>

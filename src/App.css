@@ -30,6 +30,11 @@ nav.navbar-dark .navbar-nav .nav-link.disabled {
   font-size: 1.25rem
 }
 
+.lb-slg {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
 ul.list-group {
   padding: 0 15% 10% 15%;
 }

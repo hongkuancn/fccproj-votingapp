@@ -48,7 +48,7 @@ class PollPageChart extends React.Component {
     let { topic } = poll;
 
     return (
-      <div className="col-6">
+      <div className="col-7 mt-5">
 
         <Pie
         	data={data}

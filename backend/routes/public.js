@@ -162,6 +162,7 @@ Router.get('/polls/:id', (req, res) => {
     const id = user._id;
     //get a sub-document by id
     const doc = user.polls.id(req.params.id);
+
     if(doc){
       res.json({doc, id});
     } else {
@@ -175,19 +176,27 @@ Router.post('/addoption', (req, res) => {
   const { _id, newOption } = req.body;
 
   User.findOne({'polls._id': _id}, (err, user) => {
-    //get a sub-document by id
-    const doc = user.polls.id(_id);
-    if(doc){
-      doc.options.push({name: newOption, times: 1});
-      user.save((err, updateUser) => {
-        if (err) {
-          res.status(400).json({error: "Fail to add a new option!"})
+    pubip.v4().then(ip => {
+      //get a sub-document by id
+      const doc = user.polls.id(_id);
+      if(doc){
+        const index = findIndex(doc.ipaddress, item => item === ip);
+        //when the ip has already voted
+        if(index > -1 ){
+          res.status(400).json({error: "Every IP address can vote once a poll!"})
+        } else {
+          doc.options.push({name: newOption, times: 1});
+          user.save((err, updateUser) => {
+            if (err) {
+              res.status(400).json({error: "Fail to add a new option!"})
+            }
+            res.json({ message: "Add a new option successfully!", doc});
+          })
         }
-        res.json({ message: "Add a new option successfully!", doc});
-      })
-    } else {
-      res.status(400).json({error: "Fail to add a new option!"})
-    }
+      } else {
+        res.status(400).json({error: "Fail to add a new option!"})
+      }
+    })
   })
 })
 

@@ -109,6 +109,14 @@ export function addOption(data){
   }
 }
 
-// export function shareOnTwitter(data){
-//   return axios.post("http://api.twitter.com/1.1/statuses/update.json?status=Maybe%20he%27ll%20finally%20find%20his%20keys.%20%23peterfalk", data)
-// }
+export function signUpWithTwitter(){
+  return dispatch => {
+    return axios.get('http://localhost:8080/api/twitter')
+      // .then(res => {
+      //     dispatch(addPoll(res.data.doc));
+      //     dispatch(addMessage(res.data.message));
+      //   return res;
+      // })
+      .then(res => console.log(res))
+  }
+}

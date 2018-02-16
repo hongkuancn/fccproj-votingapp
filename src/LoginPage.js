@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
             </div>)}
         </div>
 
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-primary mt-2">Login</button>
       </form>
     )
   }

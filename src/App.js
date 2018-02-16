@@ -25,11 +25,13 @@ class App extends Component {
         { isAuthenticated ? <NavigationUser username={username}/> : <Navigation />}
         { message && <FlashMessage message={message} closeMessage={this.props.closeMessage}/> }
         <Switch>
-         <Route path="/signup" component={SignupPage} />
-         <Route path="/login" component={LoginPage} />
-         <PrivateRoute path="/private" component={WelcomePage} isAuthenticated={isAuthenticated} username={username}/>
-         <Route path="/" component={ListPage} />
-       </Switch>
+           <Route path="/signup" component={SignupPage} />
+           <Route path="/login" component={LoginPage} />
+           <PrivateRoute path="/private" component={WelcomePage} isAuthenticated={isAuthenticated} username={username}/>
+           <Route path="/" component={ListPage} />
+        </Switch>
+        <div className="text-center text-muted mt-3">&copy; Hongkuan Wang</div>
+        <div className="text-center text-muted">GitHub Repo  <a href="https://github.com/hongkuancn/fccproj-votingapp" target="_blank">fccproj-votingapp</a></div>
       </div>
     );
   }

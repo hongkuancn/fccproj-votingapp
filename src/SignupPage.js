@@ -82,7 +82,7 @@ class SignupPage extends React.Component {
               {errors.passwordConfirmation}
             </div>)}
         </div>
-        <button type="submit" className="btn btn-primary">Sign Up</button>
+        <button type="submit" className="btn btn-primary mt-2">Sign Up</button>
       </form>
     )
   }

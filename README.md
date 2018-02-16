@@ -24,7 +24,7 @@ __Still working on the function of signing up with Twitter.__
 
 * __User Story__: As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
 
-* __User Story__: As an unauthenticated or authenticated user, I can see the results of polls in chart form. (This could be implemented using Chart.js or Google Charts.)
+* __User Story__: As an unauthenticated or authenticated user, I can see the results of polls in chart form.
 
 * __User Story__: As an unauthenticated or authenticated user, if I don't like the options on a poll, I can create a new option.
 
@@ -44,7 +44,7 @@ __Still working on the function of signing up with Twitter.__
 
 * MongoDB, Mongoose, MongoLAB
 
-* Data visualization, ChartJS
+* Data visualization, Chart.js
 
 * Authentication, JWT, localStorage
 

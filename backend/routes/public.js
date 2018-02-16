@@ -8,7 +8,6 @@ import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import jwt from 'jsonwebtoken';
-import pubip from 'publicip';
 
 const Router = express.Router();
 
@@ -109,50 +108,36 @@ Router.post('/login', (req, res, next) => {
   }
 })
 
-function checkIp(id){
-  User.findOne({'polls._id': id}, (err, user) => {
-    //get a sub-document by id
-    let index;
-    let doc = user.polls.id(id);
-    pubip.v4().then(ip => {
-      console.log("ok")
-      const index = findIndex(doc.ipaddress, item => item === ip);
-    })
-    return index;
-  })
-}
-
 //handle vote action
 Router.post('/vote', (req, res) => {
   const { _id, option } = req.body;
-  // const index = checkIp(_id);
   // console.log(index)
   User.findOne({'polls._id': _id}, (err, user) => {
-    pubip.v4().then(ip => {
-      //get a sub-document by id
-      let doc = user.polls.id(_id);
-      const index = findIndex(doc.ipaddress, item => item === ip);
-      //when the ip has already voted
-      if(index > -1 ){
-        res.status(400).json({error: "Every IP address can vote once a poll!"})
-      } else {
-        //add ip address to db
-        doc.ipaddress.push(ip);
-        //find the chosen option
-        map(doc.options, opt => {
-          if(opt["name"] === option){
-            opt["times"]++;
-          }
-        })
+    //get client IP
+    const ip = req.clientIp;
+    //get a sub-document by id
+    let doc = user.polls.id(_id);
+    const index = findIndex(doc.ipaddress, item => item === ip);
+    //when the ip has already voted
+    if(index > -1 ){
+      res.status(400).json({error: "Every IP address can vote once a poll!"})
+    } else {
+      //add ip address to db
+      doc.ipaddress.push(ip);
+      //find the chosen option
+      map(doc.options, opt => {
+        if(opt["name"] === option){
+          opt["times"]++;
+        }
+      })
 
-        user.save((err, updateUser) => {
-          if (err) {
-            res.status(400).json({error: "Fail to vote!"})
-          }
-          res.json({ message: "Vote successfully!", doc});
-        })
-      }
-    });
+      user.save((err, updateUser) => {
+        if (err) {
+          res.status(400).json({error: "Fail to vote!"})
+        }
+        res.json({ message: "Vote successfully!", doc});
+      })
+    }
   })
 })
 
@@ -176,27 +161,26 @@ Router.post('/addoption', (req, res) => {
   const { _id, newOption } = req.body;
 
   User.findOne({'polls._id': _id}, (err, user) => {
-    pubip.v4().then(ip => {
-      //get a sub-document by id
-      const doc = user.polls.id(_id);
-      if(doc){
-        const index = findIndex(doc.ipaddress, item => item === ip);
-        //when the ip has already voted
-        if(index > -1 ){
-          res.status(400).json({error: "Every IP address can vote once a poll!"})
-        } else {
-          doc.options.push({name: newOption, times: 1});
-          user.save((err, updateUser) => {
-            if (err) {
-              res.status(400).json({error: "Fail to add a new option!"})
-            }
-            res.json({ message: "Add a new option successfully!", doc});
-          })
-        }
+    const ip = req.clientIp;
+    //get a sub-document by id
+    const doc = user.polls.id(_id);
+    if(doc){
+      const index = findIndex(doc.ipaddress, item => item === ip);
+      //when the ip has already voted
+      if(index > -1 ){
+        res.status(400).json({error: "Every IP address can vote once a poll!"})
       } else {
-        res.status(400).json({error: "Fail to add a new option!"})
+        doc.options.push({name: newOption, times: 1});
+        user.save((err, updateUser) => {
+          if (err) {
+            res.status(400).json({error: "Fail to add a new option!"})
+          }
+          res.json({ message: "Add a new option successfully!", doc});
+        })
       }
-    })
+    } else {
+      res.status(400).json({error: "Fail to add a new option!"})
+    }
   })
 })
 

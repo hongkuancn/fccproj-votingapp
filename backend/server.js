@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import publicRouter from './routes/public';
 import privateRouter from './routes/user';
-import path from 'path'
+import path from 'path';
+import requestIp from 'request-ip'
 
 const app = express();
 app.use(bodyParser.json());
+app.use(requestIp.mw());
 
 // get reference to the client build directory
 const staticFiles = express.static(path.join(__dirname, '../../build'));

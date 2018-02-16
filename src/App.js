@@ -31,7 +31,7 @@ class App extends Component {
            <Route path="/" component={ListPage} />
         </Switch>
         <div className="text-center text-muted mt-3">&copy; Hongkuan Wang</div>
-        <div className="text-center text-muted">GitHub Repo  <a href="https://github.com/hongkuancn/fccproj-votingapp" target="_blank">fccproj-votingapp</a></div>
+        <div className="text-center text-muted">GitHub Repo  <a href="https://github.com/hongkuancn/fccproj-votingapp" target="_blank" rel="noopener noreferrer">fccproj-votingapp</a></div>
       </div>
     );
   }

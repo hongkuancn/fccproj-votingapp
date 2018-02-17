@@ -18,7 +18,6 @@ const PollSchema = new Schema({
 
 const UserSchema = new Schema({
   username: String,
-  googleId: String,
   password_digest: String,
   polls: [PollSchema]
 })

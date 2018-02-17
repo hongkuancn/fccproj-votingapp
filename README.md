@@ -8,8 +8,6 @@ It has been deployed on Heroku. Heroku: [https://cryptic-stream-11764.herokuapp.
 
 There are 1287 lines of JavaScript code in the project.
 
-__Still working on the function of signing up with Twitter.__
-
 ## Functions
 
 * __User Story__: As an authenticated user, I can keep my polls and come back later to access them.
@@ -46,7 +44,7 @@ __Still working on the function of signing up with Twitter.__
 
 * Data visualization, Chart.js
 
-* Authentication, JWT, localStorage
+* Authentication, JWT, Validation
 
 * Public IP address check, yarn
 

@@ -93,7 +93,6 @@ export function vote(data){
           dispatch(addPoll(res.data.doc))
         return res
       })
-      // .then(res => {console.log(res); return res})
   }
 }
 
@@ -106,17 +105,5 @@ export function addOption(data){
         return res;
       }
     )
-  }
-}
-
-export function signUpWithTwitter(){
-  return dispatch => {
-    return axios.get('http://localhost:8080/api/twitter')
-      // .then(res => {
-      //     dispatch(addPoll(res.data.doc));
-      //     dispatch(addMessage(res.data.message));
-      //   return res;
-      // })
-      .then(res => console.log(res))
   }
 }

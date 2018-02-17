@@ -26,16 +26,15 @@ class Mypollspage extends React.Component {
   }
 
   handleClick = (id) => {
-    const { pollslist } = this.state;
     this.props.fetchPoll(id)
       .then(res => this.setState({ chosenPoll: res.data.doc, userid: res.data.id }))
   }
 
   render(){
-    const { pollslist, chosenPoll } = this.state;
+    const { chosenPoll } = this.state;
 
     const polls = (
-      map(pollslist, poll =>   (
+      map(this.state.pollslist, poll =>   (
             <li key={poll._id} className="list-group-item list-group-item-action list-group-item-default lb-lg text-center" onClick={() => this.handleClick(poll._id)}>{poll.topic}</li>
           )
       )
@@ -64,7 +63,8 @@ class Mypollspage extends React.Component {
 
 Mypollspage.propTypes = {
   fetchMyList: PropTypes.func.isRequired,
-  fetchPoll: PropTypes.func.isRequired
+  fetchPoll: PropTypes.func.isRequired,
+  chosenPoll: PropTypes.object
 }
 
 function mapStateToProps(state){

@@ -62,7 +62,7 @@ class PollPageForm extends React.Component {
     const { disable, redirect, option } = this.state;
 
     if (redirect) {
-       return <Redirect to='/'/>;
+       return <Redirect to='/private/#'/>;
      }
 
     const options = (
@@ -73,7 +73,7 @@ class PollPageForm extends React.Component {
 
     const newoptionform = (
       <div className="form-group form-inline">
-        <label htmlFor="colFormLabelSm" className="ml-2">New Option</label>
+        <label className="ml-2">New Option</label>
         <div className="ml-5">
           <input type="text" name="newOption" value={this.state.newOption} className="form-control" placeholder="" onChange={this.handleChange}/>
         </div>
@@ -87,7 +87,7 @@ class PollPageForm extends React.Component {
       <div className="col-5">
         <form onSubmit={this.handleSubmit} className="mt-5 ml-5 pt-5">
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1" className="lb-slg mb-2">I'd like to vote for...</label>
+            <label className="lb-slg mb-2">I'd like to vote for...</label>
             <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
               <option value="Choose an option...">Choose an option...</option>
               {options}

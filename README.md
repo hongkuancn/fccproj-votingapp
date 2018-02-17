@@ -4,7 +4,9 @@ This is a full-stack Voting App using React, Redux, ExpressJS and MongoDB. It im
 
 The objective and functions of the project are set by [Build a Voting App | freeCodeCamp](https://www.freecodecamp.org/challenges/build-a-voting-app).
 
-It has been deployed on AWS. AWS: [http://ec2-54-93-254-72.eu-central-1.compute.amazonaws.com/](http://ec2-54-93-254-72.eu-central-1.compute.amazonaws.com/).
+It has been deployed on AWS Ubuntu Server and Heroku. <br />
+AWS:[http://ec2-54-93-254-72.eu-central-1.compute.amazonaws.com/](http://ec2-54-93-254-72.eu-central-1.compute.amazonaws.com/). <br />
+Heroku:[https://cryptic-stream-11764.herokuapp.com](https://cryptic-stream-11764.herokuapp.com)
 
 There are 1260 lines of JavaScript code in the project.
 
@@ -48,7 +50,7 @@ There are 1260 lines of JavaScript code in the project.
 
 * Public IP address check, yarn
 
-* Production environment and deployment to AWS
+* Production environment and deployment to AWS Ubuntu Server and Heroku
 
 * Bootstrap 4, CSS
 

@@ -9,7 +9,6 @@ import { Redirect } from 'react-router-dom'
 class PollPageForm extends React.Component {
   state = {
     option: "Choose an option...",
-    disable: false,
     redirect: false,
     newOption: ''
   }
@@ -24,7 +23,7 @@ class PollPageForm extends React.Component {
     const { option } = this.state;
     // check option value
     if(option !== "Choose an option..."){
-      this.setState({ disable: true, option });
+      this.setState({ option });
       this.props.vote({ _id, option})
         .catch(err => alert(err.response.data.error))
     } else if (option === "Choose an option..."){
@@ -59,7 +58,7 @@ class PollPageForm extends React.Component {
   render(){
     //id is from redux, userid is from parent component
     const { poll, isAuthenticated, userid, id } = this.props;
-    const { disable, redirect, option } = this.state;
+    const { redirect, option } = this.state;
 
     if (redirect) {
        return <Redirect to='/private/#'/>;
@@ -88,7 +87,7 @@ class PollPageForm extends React.Component {
         <form onSubmit={this.handleSubmit} className="mt-5 ml-5 pt-5">
           <div className="form-group">
             <label className="lb-slg mb-2">I'd like to vote for...</label>
-            <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange} disabled={disable}>
+            <select name="option" value={this.state.option} className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange}>
               <option value="Choose an option...">Choose an option...</option>
               {options}
               <option value="I'd like to add a custom option...">I'd like to add a custom option...</option>

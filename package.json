@@ -12,6 +12,7 @@
     "chart.js": "2.7.1",
     "classnames": "2.2.5",
     "concurrently": "3.5.1",
+    "dotenv": "^5.0.0",
     "jsonwebtoken": "8.1.1",
     "jwt-decode": "2.2.0",
     "lodash": "4.17.5",

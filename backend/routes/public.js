@@ -8,6 +8,8 @@ import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const Router = express.Router();
 
@@ -92,7 +94,7 @@ Router.post('/login', (req, res, next) => {
           const token = jwt.sign({
             username: user.username,
             id: user._id.toString()
-          }, 'keyforjwt')
+          }, process.env.jwtKey)
           res.json({token, user, message: 'Log in successfully!'})
         } else {
           errors.login = "Invalid username/password pair";

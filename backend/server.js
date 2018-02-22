@@ -5,6 +5,8 @@ import publicRouter from './routes/public';
 import privateRouter from './routes/user';
 import path from 'path';
 import requestIp from 'request-ip';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,8 +18,13 @@ const staticFiles = express.static(path.join(__dirname, '../../build'));
 // pass the static files (react app) to the express app.
 app.use(staticFiles)
 
-// const dbURL = "mongodb://localhost/votingapp";
-const dbURL = "mongodb://user:user123@ds125388.mlab.com:25388/hk_votingapp";
+let dbURL;
+if(process.env.NODE_ENV !== 'production'){
+  dbURL = "mongodb://localhost/votingapp"
+} else {
+  dbURL = process.env.DB_URL;
+}
+
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURL, () => {
   console.log("connected to mongodb");

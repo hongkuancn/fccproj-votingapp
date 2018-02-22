@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import jwtDecode from 'jwt-decode';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default (req, res, next) => {
   const autoken = req.get('Auth-Token');
@@ -10,7 +12,7 @@ export default (req, res, next) => {
   }
 
   if (token){
-    jwt.verify(token, 'keyforjwt', (err, decoded) => {
+    jwt.verify(token, process.env.jwtKey, (err, decoded) => {
       const { id } = decoded;
       User.findOne({ _id: id }, (err, user) => {
         if (err){

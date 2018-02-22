@@ -5,7 +5,7 @@ class Navigation extends React.Component {
   render(){
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary">
-        <Link to="/" className="navbar-brand">Votex</Link>
+        <a href="/" className="navbar-brand">Votex</a>
 
         <ul className="navbar-nav ml-auto">
           <li className="nav-item mr-3">

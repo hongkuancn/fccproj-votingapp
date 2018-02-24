@@ -37,14 +37,14 @@ Router.get('/list', (req, res) => {
   User.find({polls: {$gt: []}}, (err, users) => {
     const polls = map(users,(user) => user.polls);
     let list = [];
-    //it is a nested array, cannot use map to drop an outside array
-    for(let i=0;i<polls.length;i++){
-    	for(let j=0;j<polls[i].length;j++){
-        if(polls[i][j]){
-          list.push(polls[i][j])
-        }
-    	}
-    }
+    //push all polls into list
+    polls.forEach(pollsInAuser => {
+    	pollsInAuser.forEach(poll => {
+    		if (poll) {
+    			list.push(poll)
+    		}
+    	})
+    })
     if(list){
       res.json(list)
     } else {

@@ -71,7 +71,7 @@ $ npm install yarn -g
 Open the folder:
 
 ```
-$ cd todo-list
+$ cd fccproj-votingapp
 ```
 
 Install all dependancies:
